@@ -1,0 +1,19 @@
+{
+  "name": "vue-screen-box",
+  "version": "1.0.0",
+  "description": "a full screen component of vue3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue3",
+    "screen",
+    "component"
+  ],
+  "author": "rightlee 1051724194@qq.com",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ]
+}
