@@ -20,6 +20,9 @@ const props = defineProps({
     }
 })
 
+//通知外部方法回调
+const emits = defineEmits(['complete'])
+
 const width = ref(0)
 const height = ref(0)
 const originalWidth = ref(0);
@@ -34,9 +37,10 @@ onMounted(async () => {
     updateSize()
     updateScale()
     //防抖监听视图变化、执行回调
-    window.addEventListener("resize", debounce(100, onResize));
+    window.addEventListener("resize", debounce(300, onResize));
     initMutationObserver();
     ready.value = true;
+    emits('complete',{ type:'complete' })
 })
 
 //初始化尺寸
@@ -89,12 +93,13 @@ const onResize = async () => {
 };
 
 //防抖方法(默认延时0.5s)
-const debounce = (delay = 500, callback) =>{
+const debounce = (delay = 1000, callback) =>{
     let task = null
-    return function (){
+    return function (...rest){
         clearTimeout(task)
         task = setTimeout(() => {
-            callback.apply(this.arguments);
+            callback.apply(this,rest);
+            emits('complete',{ type:'complete' })
         }, delay);
     }
 }
@@ -103,18 +108,18 @@ const debounce = (delay = 500, callback) =>{
 const initMutationObserver = () => {
     const MutationObserver = window.MutationObserver;
     observer.value = new MutationObserver(onResize)
-    console.log(observer.value)
     observer.value.observe(vueScreenBoxRef.value, {
         attributes: true,
         attributeFilter: ["style"],
         attributeOldValue: true,
-      })
+    })
 }
 
 onUnmounted(() => {
     window.removeEventListener("resize", onResize);
     removeMutationObserver();
 });
+
 </script>
 <script>
 export default {

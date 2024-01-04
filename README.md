@@ -3,6 +3,20 @@
 
 页面锁屏，放大和缩小浏览器，屏幕比例保持不变
 
+1.1.0版本在原有的基础上新增了一个完成回调
+```js
+<VueScreenBox @complete="getStatus">
+    //页面具体内容
+</VueScreenBox>
+
+<script setup>
+const getStatus = data => {
+    // data = { type:'complete' } 表示完成
+    // 处理回调
+}
+</script>
+```
+
 
 ###### Installation
 ```js
